@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Blog.Data.Context;
 //using Microsoft.EntityFrameworkCore;
-//using Blog.Data.Context; bunlarý ekleyebilmek için Packeta ten eklemler yaptýk 
+//using Blog.Data.Context; bunlarý ekleyebilmek için Packeta ten eklemeler yaptýk 
 
 
 
