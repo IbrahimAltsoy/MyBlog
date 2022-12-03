@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Data.UnitOfWork
 {
-    public interface IUnitOfWork : IAsyncDisposable
+    public interface IUnitOfWorked : IAsyncDisposable
     {
         IRepository<T> GetRepository<T>() where T : class, IEntityBase, new();
         Task<int> SaveAsync();

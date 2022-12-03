@@ -17,7 +17,7 @@ namespace Blog.Data.Extensions
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWorked, UnitOfWorked>();
             return services;
         }
 

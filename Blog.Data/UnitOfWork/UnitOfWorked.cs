@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Blog.Data.UnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWorked : IUnitOfWorked
     {
         private readonly AppDbContext _appDbContext;
 
-        public UnitOfWork(AppDbContext appDbContext)
+        public UnitOfWorked(AppDbContext appDbContext)
         {
             this._appDbContext = appDbContext;
         }
@@ -33,7 +33,7 @@ namespace Blog.Data.UnitOfWork
             return await _appDbContext.SaveChangesAsync(); 
         }
 
-        IRepository<T> IUnitOfWork.GetRepository<T>()
+        IRepository<T> IUnitOfWorked.GetRepository<T>()
         {
             return new Repository<T>(_appDbContext);
         }
