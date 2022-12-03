@@ -1,4 +1,5 @@
-﻿using Blog.Web.Models;
+﻿using Blog.Service.Services.Abstractions;
+using Blog.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,15 +8,19 @@ namespace Blog.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IArticleServices _articleServices;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IArticleServices articleServices)
         {
             _logger = logger;
+            this._articleServices = articleServices;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var articles = await _articleServices.GetAllArticlesAsycn();
+
+            return View(articles);
         }
 
         public IActionResult Privacy()

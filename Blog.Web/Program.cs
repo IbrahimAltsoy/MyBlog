@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Blog.Data.Context;
 using Blog.Data.Extensions;
+using Blog.Service.Extensitions;
 //using Microsoft.EntityFrameworkCore;
 //using Blog.Data.Context; bunlarý ekleyebilmek için Packeta ten eklemeler yaptýk 
 
@@ -14,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.LoadDataLayerExtensions(builder.Configuration);
+builder.Services.LoadServicesLayerExtensions();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 // Veritabaný baðlantýsý için gerekli kodlarý ekleyeceðiz, framework var onu packate ten ekleyecez ki çalýþsýn 
