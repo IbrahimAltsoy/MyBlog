@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Blog.Data.Context;
+using Blog.Data.Extensions;
 //using Microsoft.EntityFrameworkCore;
 //using Blog.Data.Context; bunlarý ekleyebilmek için Packeta ten eklemeler yaptýk 
 
@@ -11,10 +12,12 @@ using Blog.Data.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.LoadDataLayerExtensions(builder.Configuration);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 // Veritabaný baðlantýsý için gerekli kodlarý ekleyeceðiz, framework var onu packate ten ekleyecez ki çalýþsýn 
-builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // Burada bitiyor, DefaultConnection bu isim appsetting.jsondan geldi 
 
 var app = builder.Build();
