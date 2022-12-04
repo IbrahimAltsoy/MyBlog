@@ -1,4 +1,5 @@
-﻿using Blog.Entity.Entities;
+﻿using Blog.Entity.DTOS.Articles;
+using Blog.Entity.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Blog.Service.Services.Abstractions
 {
     public interface IArticleServices
     {
-        Task<List<Article>> GetAllArticlesAsycn();
+        Task<List<ArticleDTO>> GetAllArticlesAsycn();
     }
 }
