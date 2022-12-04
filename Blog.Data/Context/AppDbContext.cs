@@ -15,13 +15,17 @@ namespace Blog.Data.Context
 {
     public class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid, AppUserClaim, AppUserRole, AppUserLogin, AppRoleClaim, AppUserToken>
     {
+        //private readonly DbContextOptions<AppDbContext> _options;
+
+        
+
         public AppDbContext()
         {
 
         }
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) 
         {
-
+            
         }
         public DbSet<Article> Articles { get; set; }
 
