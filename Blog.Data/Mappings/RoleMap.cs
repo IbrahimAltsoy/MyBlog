@@ -37,6 +37,11 @@ namespace Blog.Data.Mappings
 
             // Each Role can have many associated RoleClaims
             builder.HasMany<AppRoleClaim>().WithOne().HasForeignKey(rc => rc.RoleId).IsRequired();
+            //builder.HasData(new AppRole
+            //{
+            //    Id = "92705811-704B-4292-9BE2-EAB8124AE245",
+
+            //});
         }
     }
 }

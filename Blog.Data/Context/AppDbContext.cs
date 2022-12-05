@@ -23,7 +23,7 @@ namespace Blog.Data.Context
         {
 
         }
-        public AppDbContext(DbContextOptions<AppDbContext> options) 
+        public AppDbContext(DbContextOptions<Microsoft.EntityFrameworkCore.DbContextOptions> options) : base(options) // Buranın hatasını bu şekilde çözüm oluşturduk : base(options)
         {
             
         }
