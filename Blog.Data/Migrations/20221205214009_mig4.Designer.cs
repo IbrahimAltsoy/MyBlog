@@ -4,6 +4,7 @@ using Blog.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221205214009_mig4")]
+    partial class mig4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,36 +51,6 @@ namespace Blog.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("92705811-704b-4292-9be2-eab8124ae245"),
-                            ConcurrencyStamp = "d609e61c-3ea2-4ca2-a5d3-6314ac8c5fc2",
-                            Name = "admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = new Guid("640e6eee-52a9-4900-9f16-48b349c76266"),
-                            ConcurrencyStamp = "2f3fbe7e-146a-41b2-976d-6bd5bf4fb0b5",
-                            Name = "erkan",
-                            NormalizedName = "ERKAN"
-                        },
-                        new
-                        {
-                            Id = new Guid("9ff9f705-3d14-42d2-bb00-0ec7d55719b2"),
-                            ConcurrencyStamp = "c0b3ae7b-8cc3-458a-a4d6-92f4d01a953b",
-                            Name = "altsoy",
-                            NormalizedName = "ALTSOY"
-                        },
-                        new
-                        {
-                            Id = new Guid("8b1ade65-892e-4314-bf64-6572c8d63a29"),
-                            ConcurrencyStamp = "406cc599-0452-458f-9a11-235f41f6d7ea",
-                            Name = "Ersin",
-                            NormalizedName = "ERSIN"
-                        });
                 });
 
             modelBuilder.Entity("Blog.Entity.Entities.AppRoleClaim", b =>
@@ -176,46 +149,6 @@ namespace Blog.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("4a2ec830-70b3-4158-9392-995c592dfe36"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "3c5019c6-e7b3-4e6f-b32f-670fbc3cefeb",
-                            Email = "nurdan@gmail.com",
-                            EmailConfirmed = true,
-                            FirstNAme = "Nurdan",
-                            LastName = "Cengiz",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "NURDAN@GMAIL.COM",
-                            NormalizedUserName = "NURDAN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDZsVUo3XMP2sk09w+7aGHWfpJlMqo7OygFQQNRM7trDDrR8crrSspvBMypNU8VbLA==",
-                            PhoneNumber = "+0905444444444",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "d665d7de-bfa8-41c7-921f-ca8ea7cdf277",
-                            TwoFactorEnabled = false,
-                            UserName = "nurdan@gmail.com"
-                        },
-                        new
-                        {
-                            Id = new Guid("6e147234-3d55-4e06-92a8-725213691a3a"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "7229823e-d697-4e25-9fe7-b93d0858d1df",
-                            Email = "admin@gmail.com",
-                            EmailConfirmed = false,
-                            FirstNAme = "admin",
-                            LastName = "user",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@GMAIL.COM",
-                            NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPVhVh2/q43ESR2MXQ6WAs2crD0WiY71xNL3cybHD+ZNG1pQZMwBwwkAHvYk0T7a9w==",
-                            PhoneNumber = "+0905444444455",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "da798ab1-e4b9-4f6d-bc67-a574fb2a404b",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@gmail.com"
-                        });
                 });
 
             modelBuilder.Entity("Blog.Entity.Entities.AppUserClaim", b =>
@@ -278,18 +211,6 @@ namespace Blog.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("4a2ec830-70b3-4158-9392-995c592dfe36"),
-                            RoleId = new Guid("92705811-704b-4292-9be2-eab8124ae245")
-                        },
-                        new
-                        {
-                            UserId = new Guid("6e147234-3d55-4e06-92a8-725213691a3a"),
-                            RoleId = new Guid("640e6eee-52a9-4900-9f16-48b349c76266")
-                        });
                 });
 
             modelBuilder.Entity("Blog.Entity.Entities.AppUserToken", b =>
@@ -369,11 +290,11 @@ namespace Blog.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f7d0393e-b829-4057-abf0-5dc3cf7f66a6"),
+                            Id = new Guid("0136f79a-abde-4d27-ae23-ffec2e40cb32"),
                             CategoryId = new Guid("e9c94b84-33a4-4872-b3ae-ec1daab3be00"),
                             Content = "Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir. Lorem Ipsum, adı bilinmeyen bir matbaacının bir hurufat numune kitabı oluşturmak üzere bir yazı galerisini alarak karıştırdığı 1500'lerden beri endüstri standardı sahte metinler olarak kullanılmıştır. Beşyüz yıl boyunca varlığını sürdürmekle kalmamış, aynı zamanda pek değişmeden elektronik dizgiye de sıçramıştır. 1960'larda Lorem Ipsum pasajları da içeren Letraset yapraklarının yayınlanması ile ve yakın zamanda Aldus PageMaker gibi Lorem Ipsum sürümleri içeren masaüstü yayıncılık yazılımları ile popüler olmuştur.",
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2022, 12, 6, 2, 11, 10, 233, DateTimeKind.Local).AddTicks(5932),
+                            CreatedDate = new DateTime(2022, 12, 6, 0, 40, 8, 731, DateTimeKind.Local).AddTicks(6532),
                             DeletedBy = "10-10-2020",
                             ImageId = new Guid("c0cbe860-d7a6-4a6a-954a-9b99dcc1f3bd"),
                             IsDeleted = false,
@@ -383,11 +304,11 @@ namespace Blog.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("370ce215-8507-4383-805e-16cc15d77c9e"),
+                            Id = new Guid("c085e760-ea07-46f3-b67f-3bafaf9e162d"),
                             CategoryId = new Guid("aa1e766b-7ce2-4d98-98c0-e58de51c003e"),
                             Content = "Yinelenen bir sayfa içeriğinin okuyucunun dikkatini dağıttığı bilinen bir gerçektir. Lorem Ipsum kullanmanın amacı, sürekli 'buraya metin gelecek, buraya metin gelecek' yazmaya kıyasla daha dengeli bir harf dağılımı sağlayarak okunurluğu artırmasıdır. Şu anda birçok masaüstü yayıncılık paketi ve web sayfa düzenleyicisi, varsayılan mıgır metinler olarak Lorem Ipsum kullanmaktadır. Ayrıca arama motorlarında 'lorem ipsum' anahtar sözcükleri ile arama yapıldığında henüz tasarım aşamasında olan çok sayıda site listelenir. Yıllar içinde, bazen kazara, bazen bilinçli olarak (örneğin mizah katılarak), çeşitli sürümleri geliştirilmiştir.",
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2022, 12, 6, 2, 11, 10, 233, DateTimeKind.Local).AddTicks(5940),
+                            CreatedDate = new DateTime(2022, 12, 6, 0, 40, 8, 731, DateTimeKind.Local).AddTicks(6558),
                             DeletedBy = "10-10-2020",
                             ImageId = new Guid("8690cf81-8f32-4ec4-a1a2-09cb71b7ffff"),
                             IsDeleted = false,
@@ -440,7 +361,7 @@ namespace Blog.Data.Migrations
                         {
                             Id = new Guid("e9c94b84-33a4-4872-b3ae-ec1daab3be00"),
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2022, 12, 6, 2, 11, 10, 233, DateTimeKind.Local).AddTicks(7549),
+                            CreatedDate = new DateTime(2022, 12, 6, 0, 40, 8, 732, DateTimeKind.Local).AddTicks(1697),
                             DeletedBy = "10-04-2021",
                             IsDeleted = false,
                             ModifiedBy = "Ersin",
@@ -450,7 +371,7 @@ namespace Blog.Data.Migrations
                         {
                             Id = new Guid("aa1e766b-7ce2-4d98-98c0-e58de51c003e"),
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2022, 12, 6, 2, 11, 10, 233, DateTimeKind.Local).AddTicks(7564),
+                            CreatedDate = new DateTime(2022, 12, 6, 0, 40, 8, 732, DateTimeKind.Local).AddTicks(1705),
                             DeletedBy = "10-10-2019",
                             IsDeleted = false,
                             ModifiedBy = "Erkan",
@@ -505,7 +426,7 @@ namespace Blog.Data.Migrations
                         {
                             Id = new Guid("c0cbe860-d7a6-4a6a-954a-9b99dcc1f3bd"),
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2022, 12, 6, 2, 11, 10, 233, DateTimeKind.Local).AddTicks(8945),
+                            CreatedDate = new DateTime(2022, 12, 6, 0, 40, 8, 732, DateTimeKind.Local).AddTicks(5064),
                             DeletedBy = "10-10-2020",
                             FillName = "images/testimage",
                             FillType = "jpg",
@@ -516,7 +437,7 @@ namespace Blog.Data.Migrations
                         {
                             Id = new Guid("8690cf81-8f32-4ec4-a1a2-09cb71b7ffff"),
                             CreatedBy = "Admin Test",
-                            CreatedDate = new DateTime(2022, 12, 6, 2, 11, 10, 233, DateTimeKind.Local).AddTicks(8949),
+                            CreatedDate = new DateTime(2022, 12, 6, 0, 40, 8, 732, DateTimeKind.Local).AddTicks(5074),
                             DeletedBy = "09-10-2020",
                             FillName = "images/vstest",
                             FillType = "png",
