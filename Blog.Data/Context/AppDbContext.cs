@@ -18,7 +18,6 @@ namespace Blog.Data.Context
         //private readonly DbContextOptions<AppDbContext> _options;
 
         
-
         public AppDbContext()
         {
 
