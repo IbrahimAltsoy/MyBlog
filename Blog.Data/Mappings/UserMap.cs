@@ -59,7 +59,8 @@ namespace Blog.Data.Mappings
                     LastName = "Cengiz",
                     PhoneNumberConfirmed = true,
                     EmailConfirmed = true,
-                    SecurityStamp = Guid.NewGuid().ToString()
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    ImageId = Guid.Parse("C0CBE860-D7A6-4A6A-954A-9B99DCC1F3BD")
 
 
                 };
@@ -76,7 +77,8 @@ namespace Blog.Data.Mappings
                 LastName = "user",
                 PhoneNumberConfirmed = false,
                 EmailConfirmed = false,
-                SecurityStamp = Guid.NewGuid().ToString()
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ImageId = Guid.Parse("8690CF81-8F32-4EC4-A1A2-09CB71B7FFFF")
 
 
             };

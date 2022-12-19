@@ -10,5 +10,6 @@ namespace Blog.Entity.Entities
 
 
         public ICollection<Article> Articles { get; set; }
+        public ICollection<AppUser> Users { get; set; }
     }
 }

@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Blog.Data.Context;
 using Blog.Data.Extensions;
 using Blog.Service.Extensitions;
+using Blog.Entity.Entities;
+using Microsoft.AspNetCore.Identity;
 //using Microsoft.EntityFrameworkCore;
 //using Blog.Data.Context; bunlarý ekleyebilmek için Packeta ten eklemeler yaptýk 
 
@@ -16,11 +18,39 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.LoadDataLayerExtensions(builder.Configuration);
 builder.Services.LoadServicesLayerExtensions();
+builder.Services.AddSession();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 // Veritabaný baðlantýsý için gerekli kodlarý ekleyeceðiz, framework var onu packate ten ekleyecez ki çalýþsýn 
 
 // Burada bitiyor, DefaultConnection bu isim appsetting.jsondan geldi 
+
+builder.Services.AddIdentity<AppUser, AppRole>(opt =>
+{// Burada þifrtede olmasý gereken büyük yazý küçük yazý gibi zorunlululalrrý true ve false olarak gerekliliðini ifade ediyoruz. 
+    opt.Password.RequireNonAlphanumeric = false;
+    opt.Password.RequireLowercase = false;
+    opt.Password.RequireUppercase = false;
+
+})
+    .AddRoleManager<RoleManager<AppRole>>().AddEntityFrameworkStores <AppDbContext > ().AddDefaultTokenProviders();
+builder.Services.ConfigureApplicationCookie(config =>
+{
+    config.LoginPath = new PathString("/Admin/Auth/Login");
+    config.LogoutPath = new PathString("/Admin/Auth/Logout");
+    config.Cookie = new CookieBuilder
+    {
+        Name = "MyBlog",
+        HttpOnly = true,
+        SameSite = SameSiteMode.Strict,
+        SecurePolicy = CookieSecurePolicy.SameAsRequest
+
+    };
+    config.SlidingExpiration = true;
+    config.ExpireTimeSpan = TimeSpan.FromDays(7);
+    config.AccessDeniedPath = new PathString("/Admin/Auth/AccessDanied");
+});
+
 
 var app = builder.Build();
 
@@ -34,9 +64,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 //app.MapControllerRoute(

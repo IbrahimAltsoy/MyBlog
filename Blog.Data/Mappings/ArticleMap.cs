@@ -21,7 +21,8 @@ namespace Blog.Data.Mappings
                 ModifiedBy = "Necdet",
                 DeletedBy = "10-10-2020",
                 CreatedDate = DateTime.Now,
-                IsDeleted = false
+                IsDeleted = false,
+                UserId = Guid.Parse("4A2EC830-70B3-4158-9392-995C592DFE36")
 
             },
             new Article
@@ -36,7 +37,8 @@ namespace Blog.Data.Mappings
                 ModifiedBy = "Huseyin",
                 DeletedBy = "10-10-2020",
                 CreatedDate = DateTime.Now,
-                IsDeleted = false
+                IsDeleted = false, 
+                UserId = Guid.Parse("6E147234-3D55-4E06-92A8-725213691A3A")
 
             });
 
