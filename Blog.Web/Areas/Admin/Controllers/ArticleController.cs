@@ -17,5 +17,9 @@ namespace Blog.Web.Areas.Admin.Controllers
             var articles = await _articleServices.GetAllArticlesWithCategoryNonDeletedAsycn();
             return View(articles);
         }
+        public async Task<IActionResult> Add()
+        {
+            return View();
+        }
     }
 }
