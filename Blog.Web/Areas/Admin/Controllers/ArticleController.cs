@@ -26,5 +26,13 @@ namespace Blog.Web.Areas.Admin.Controllers
             var categories = await _categoryService.GetAllCategoriesNonDeleted();
             return View(new ArticleAddDTO { categories =categories});
         }
+        [HttpPost]
+        public async Task<IActionResult> Add(ArticleAddDTO articleAddDTO)
+        {
+            await _articleServices.CreateArticleAsync(articleAddDTO);
+            RedirectToAction("Index", "Admin", new { Areas = "Admin" });
+            var categories = await _categoryService.GetAllCategoriesNonDeleted();
+            return View(new ArticleAddDTO { categories = categories });
+        }
     }
 }

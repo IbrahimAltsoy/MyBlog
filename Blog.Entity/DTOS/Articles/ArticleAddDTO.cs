@@ -11,7 +11,7 @@ namespace Blog.Entity.DTOS.Articles
     {
         public string Title { get; set; }
         public string Content { get; set; }
-        public string CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
         
         public IList<CategoryDTO> categories { get; set; }
 

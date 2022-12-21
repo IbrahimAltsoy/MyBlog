@@ -10,18 +10,20 @@
                 <form asp-controller="Article" asp-action="Add" method="post" enctype="multipart/form-data">
                     <div class="card-body">
                         <div class="form-group">
+                            <label asp-for="CategoryId">Kategori</label>
                             <select id="categoryList" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.categories, "Id", "Name"))"> </select>
                             <span asp-validation-for="CategoryId" class="text-danger"></span>
 
                         </div>
                         <div class="form-group">
-                            <label for="defaultFormControlInput" class="form-label">Başlık</label>
-                            <input type="text" class="form-control mb-2" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp">
+                            <label asp-for="Title" class="form-label">Başlık</label>
+                            <input asp-for="Title" type="text" class="form-control mb-2" id="defaultFormControlInput" placeholder="Lütfen Başlık giriniz" aria-describedby="defaultFormControlHelp">
 
                         </div>
                         <div class="form-group">
-                            <label for="defaultFormControlInput" class="form-label">İçerik</label>
-                            <input type="text" class="form-control mb-2" id="defaultFormControlInput" placeholder="John Doe" aria-describedby="defaultFormControlHelp">
+                            <label asp-for="Content" class="form-label">İçerik</label>
+                            <textarea asp-for="Content" type="text" class="form-control mb-2" id="defaultFormControlInput" placeholder="Lütfen içerik giriniz" aria-describedby="defaultFormControlHelp" min-height="280px"></textarea>
+                            
 
                         </div>
                        

@@ -39,7 +39,7 @@
                     @foreach (var article in Model)
                     {
                         <tr name="@article.Id">
-                            <th>@article.Title.Substring(0,15)</th>
+                            <th>@article.Title</th>
                             <th>@article.Category.Name</th>
 
                             <th>@article.CreatedDate.ToShortDateString()</th>
