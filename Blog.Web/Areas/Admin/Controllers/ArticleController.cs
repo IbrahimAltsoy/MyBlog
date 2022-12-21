@@ -1,4 +1,5 @@
-﻿using Blog.Service.Services.Abstractions;
+﻿using Blog.Entity.DTOS.Articles;
+using Blog.Service.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Web.Areas.Admin.Controllers
@@ -7,19 +8,23 @@ namespace Blog.Web.Areas.Admin.Controllers
     public class ArticleController : Controller
     {
         private readonly IArticleServices _articleServices;
+        private readonly ICategoryService _categoryService;
 
-        public ArticleController(IArticleServices articleServices)
+        public ArticleController(IArticleServices articleServices, ICategoryService categoryService)
         {
             this._articleServices = articleServices;
+            this._categoryService = categoryService;
         }
         public async Task<IActionResult> Index()
         {
             var articles = await _articleServices.GetAllArticlesWithCategoryNonDeletedAsycn();
             return View(articles);
         }
+        [HttpGet]
         public async Task<IActionResult> Add()
         {
-            return View();
+            var categories = await _categoryService.GetAllCategoriesNonDeleted();
+            return View(new ArticleAddDTO { categories =categories});
         }
     }
 }

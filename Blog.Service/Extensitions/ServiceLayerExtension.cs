@@ -23,6 +23,7 @@ namespace Blog.Service.Extensitions
 
                 
             services.AddScoped<IArticleServices, ArticleServices>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddAutoMapper(assembly);
             return services;
         }
