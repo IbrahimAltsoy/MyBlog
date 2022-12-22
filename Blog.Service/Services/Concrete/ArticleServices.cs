@@ -3,6 +3,7 @@ using Blog.Data.UnitOfWork;
 using Blog.Entity.DTOS.Articles;
 using Blog.Entity.Entities;
 using Blog.Service.Services.Abstractions;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,27 @@ namespace Blog.Service.Services.Concrete
             var map = _mapper.Map<List<ArticleDTO>>(articles);
 
             return map;
+        }
+        public async Task<ArticleDTO>GetArticleWithCategoryNonDeletedAsycn( Guid articleId)
+        {
+            var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => !x.IsDeleted && x.Id==articleId, x => x.Category);
+
+            var map = _mapper.Map<ArticleDTO>(article);
+
+            return map;
+        }
+        public async Task UpdateArticleAsync(ArticleUpdateDTO articleUpdateDTO)
+        {
+            var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => !x.IsDeleted && x.Id == articleUpdateDTO.Id, x => x.Category);
+            
+            article.Title = articleUpdateDTO.Title;
+            article.Content= articleUpdateDTO.Content;
+            article.CategoryId= articleUpdateDTO.CategoryId;
+            await _unitOfWork.GetRepository<Article>().UpdateAsync(article);
+            await _unitOfWork.SaveAsync();
+      
+           
+
         }
     }
 }

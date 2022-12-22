@@ -46,7 +46,9 @@
                             <th>@article.CreatedBy</th>
 
                             <th>@(article.IsDeleted ? "Pasif" : "Aktif")</th>
-                            <th>Ankara</th>
+                            <th>
+                                <a class="btn btn-warning btn-sm" data-id="@article.Id" asp-area="Admin" asp-controller="Article" asp-action="Update" asp-route-articleId="@article.Id"><i class="bx bx-edit"></i></a>
+                            </th>
                         </tr>
 
                     }
