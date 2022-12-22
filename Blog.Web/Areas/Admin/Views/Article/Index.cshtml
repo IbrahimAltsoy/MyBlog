@@ -48,6 +48,7 @@
                             <th>@(article.IsDeleted ? "Pasif" : "Aktif")</th>
                             <th>
                                 <a class="btn btn-warning btn-sm" data-id="@article.Id" asp-area="Admin" asp-controller="Article" asp-action="Update" asp-route-articleId="@article.Id"><i class="bx bx-edit"></i></a>
+                                <a class="btn btn-danger btn-sm" data-id="@article.Id" asp-area="Admin" asp-controller="Article" asp-action="Delete" asp-route-articleId="@article.Id" onclick="return confirm('Silmek istediğinden emin misin?')"><i class="bx bx-minus-circle"></i></a>
                             </th>
                         </tr>
 
@@ -60,7 +61,19 @@
 
     <hr class="my-5">
 
-</div>
+</div>@*
+// Buraya Eklendi *@
+<script>
+    function clicked(e) {
+        if (!confirm('Silmek istediğinden emin misin?')) {
+            e.preventDefault();
+        }
+    }
+</script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="~/web/alertify.min.js" />
+<script src="~/js/site.js" asp-append-version="true"></script>
+@*Burada bitiyor*@
 
 @section Scripts{
     <script src="~/js/articleIndex.js" type="application/ecmascript"></script>

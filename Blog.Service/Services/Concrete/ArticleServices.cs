@@ -66,10 +66,18 @@ namespace Blog.Service.Services.Concrete
             article.Content= articleUpdateDTO.Content;
             article.CategoryId= articleUpdateDTO.CategoryId;
             await _unitOfWork.GetRepository<Article>().UpdateAsync(article);
-            await _unitOfWork.SaveAsync();
-      
+            await _unitOfWork.SaveAsync();         
            
 
         }
+        public async Task SafeArticleDeleteAsync(Guid articleId)
+        {
+            var article = await _unitOfWork.GetRepository<Article>().GetByGuidAsync(articleId);
+            article.IsDeleted= true;
+            article.DeletedDate = DateTime.Now;
+            await _unitOfWork.GetRepository<Article>().UpdateAsync(article);
+            await _unitOfWork.SaveAsync();
+        }
+
     }
 }

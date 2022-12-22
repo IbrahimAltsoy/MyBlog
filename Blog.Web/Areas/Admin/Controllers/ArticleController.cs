@@ -58,5 +58,10 @@ namespace Blog.Web.Areas.Admin.Controllers
 
 
         }
+        public async Task<IActionResult> Delete(Guid articleId)
+        {
+            await _articleServices.SafeArticleDeleteAsync(articleId);
+            return RedirectToAction("Index", "Article", new { Areas = "Admin" });
+        }
     }
 }
