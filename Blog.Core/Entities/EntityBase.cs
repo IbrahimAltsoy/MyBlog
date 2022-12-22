@@ -15,7 +15,7 @@ namespace Blog.Core.Entities
         //    CreatedDate = DateTime.Now;
 
         //}
-       
+        
         public virtual Guid Id { get; set; } = Guid.NewGuid();
         public virtual string CreatedBy { get; set; } = "Ibrahim";
         public virtual string? ModifiedBy { get; set; }
