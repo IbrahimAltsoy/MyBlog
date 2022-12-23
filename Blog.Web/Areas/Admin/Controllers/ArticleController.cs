@@ -51,7 +51,7 @@ namespace Blog.Web.Areas.Admin.Controllers
             else
             {
                 // AddToModelState bunu bizim eklediğimiz extensions ten çağırıyoruz. Dikkat et buraya 
-                result.AddToModelState(this.ModelState);
+                
                 var categories = await _categoryService.GetAllCategoriesNonDeleted();
                 return View(new ArticleAddDTO { categories = categories });
             }
@@ -71,11 +71,25 @@ namespace Blog.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(ArticleUpdateDTO articleUpdateDTO)
         {
-            await _articleServices.UpdateArticleAsync(articleUpdateDTO);
-            var categories = await _categoryService.GetAllCategoriesNonDeleted();
+            var map = mapper.Map<Article>(articleUpdateDTO);
+            var result = await validator.ValidateAsync(map);
+            if (result.IsValid)
+            {
+                await _articleServices.UpdateArticleAsync(articleUpdateDTO);
+                
 
+            }
+            else
+            {
+                result.AddToModelState(this.ModelState);
+
+            }
+            var categories = await _categoryService.GetAllCategoriesNonDeleted();
             articleUpdateDTO.categories = categories;
             return View(articleUpdateDTO);
+
+
+
 
 
         }
