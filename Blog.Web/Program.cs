@@ -5,6 +5,7 @@ using Blog.Data.Extensions;
 using Blog.Service.Extensitions;
 using Blog.Entity.Entities;
 using Microsoft.AspNetCore.Identity;
+using NToastNotify;
 //using Microsoft.EntityFrameworkCore;
 //using Blog.Data.Context; bunlarý ekleyebilmek için Packeta ten eklemeler yaptýk 
 
@@ -20,7 +21,16 @@ builder.Services.LoadDataLayerExtensions(builder.Configuration);
 builder.Services.LoadServicesLayerExtensions();
 builder.Services.AddSession();
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+ .AddNToastNotifyToastr(new ToastrOptions()
+ {
+     PositionClass = ToastPositions.TopRight,
+     TimeOut = 3000
+
+ });
+
+
+
 
 // Veritabaný baðlantýsý için gerekli kodlarý ekleyeceðiz, framework var onu packate ten ekleyecez ki çalýþsýn 
 
@@ -33,7 +43,7 @@ builder.Services.AddIdentity<AppUser, AppRole>(opt =>
     opt.Password.RequireUppercase = false;
 
 })
-    .AddRoleManager<RoleManager<AppRole>>().AddEntityFrameworkStores <AppDbContext > ().AddDefaultTokenProviders();
+    .AddRoleManager<RoleManager<AppRole>>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 builder.Services.ConfigureApplicationCookie(config =>
 {
     config.LoginPath = new PathString("/Admin/Auth/Login");
@@ -61,7 +71,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseNToastNotify();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();

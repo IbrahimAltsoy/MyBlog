@@ -3,8 +3,10 @@ using Blog.Entity.DTOS.Articles;
 using Blog.Entity.Entities;
 using Blog.Service.Extensitions;
 using Blog.Service.Services.Abstractions;
+using Blog.Web.ToastrMessaje;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 
 namespace Blog.Web.Areas.Admin.Controllers
 {
@@ -15,13 +17,16 @@ namespace Blog.Web.Areas.Admin.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IMapper mapper;
         private readonly IValidator<Article> validator;
+        private readonly IToastNotification toastNotification;
 
-        public ArticleController(IArticleServices articleServices, ICategoryService categoryService, IMapper mapper, IValidator<Article> validator)// Buraya fluentvalidator ekledik. Field ını da ekledik akbinde create ad metodlarına girecez. 
+
+        public ArticleController(IArticleServices articleServices, ICategoryService categoryService, IMapper mapper, IValidator<Article> validator, IToastNotification toastNotification)// Buraya fluentvalidator ekledik. Field ını da ekledik akbinde create ad metodlarına girecez. 
         {
             this._articleServices = articleServices;
             this._categoryService = categoryService;
             this.mapper = mapper;
             this.validator = validator;
+            this.toastNotification = toastNotification;
         }
         public async Task<IActionResult> Index()
         {
@@ -44,20 +49,29 @@ namespace Blog.Web.Areas.Admin.Controllers
             if (result.IsValid)
             {
                 await _articleServices.CreateArticleAsync(articleAddDTO);
-               return RedirectToAction("Index", "Admin", new { Areas = "Admin" });
+                toastNotification.AddSuccessToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleAddSuccesfull(articleAddDTO.Title), new ToastrOptions
+                {
+                    Title = "Başarılı"
+                });
+                return RedirectToAction("Index", "Article", new { Areas = "Admin" });
 
 
             }
             else
             {
                 // AddToModelState bunu bizim eklediğimiz extensions ten çağırıyoruz. Dikkat et buraya 
+                toastNotification.AddErrorToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleAddUnSuccessful(articleAddDTO.Title), new ToastrOptions
+                {
+                    Title = "Başarısız"
+                }); 
+                result.AddToModelState(this.ModelState);
                 
-                var categories = await _categoryService.GetAllCategoriesNonDeleted();
-                return View(new ArticleAddDTO { categories = categories });
+
             }
             // Validation işlemi burada bitirmiş oluyoruz artık işleme girmiş oluyor. 
+            var categories = await _categoryService.GetAllCategoriesNonDeleted();
+            return View(new ArticleAddDTO { categories = categories });
 
-        
         }
         [HttpGet]
         public async Task<IActionResult> Update(Guid articleId)
@@ -76,13 +90,19 @@ namespace Blog.Web.Areas.Admin.Controllers
             if (result.IsValid)
             {
                 await _articleServices.UpdateArticleAsync(articleUpdateDTO);
-                
-
+                toastNotification.AddSuccessToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleUpdateSuccesfull(articleUpdateDTO.Title), new ToastrOptions
+                {
+                    Title = "Başarılı"
+                });
+                return RedirectToAction("Index", "Article", new { Areas = "Admin" });
             }
             else
             {
                 result.AddToModelState(this.ModelState);
-
+                toastNotification.AddErrorToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleUpdateUnSuccessful(articleUpdateDTO.Title), new ToastrOptions
+                {
+                    Title = "Başarısız"
+                });
             }
             var categories = await _categoryService.GetAllCategoriesNonDeleted();
             articleUpdateDTO.categories = categories;
@@ -95,7 +115,14 @@ namespace Blog.Web.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Delete(Guid articleId)
         {
+            var deleteArticle = await _articleServices.GetArticleWithCategoryNonDeletedAsycn(articleId);
+
             await _articleServices.SafeArticleDeleteAsync(articleId);
+            toastNotification.AddWarningToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleDeleteSuccessful(deleteArticle.Title), new ToastrOptions
+            {
+                Title = "Başarılı"
+            });
+
             return RedirectToAction("Index", "Article", new { Areas = "Admin" });
         }
     }
