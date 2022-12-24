@@ -7,6 +7,7 @@ using Blog.Service.Services.Abstractions;
 using Blog.Service.Services.Concrete;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -28,7 +29,10 @@ namespace Blog.Service.Extensitions
                 
             services.AddScoped<IArticleServices, ArticleServices>();
             services.AddScoped<ICategoryService, CategoryService>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAutoMapper(assembly);
+
 
             services.AddControllersWithViews().AddFluentValidation(opt =>
             {
