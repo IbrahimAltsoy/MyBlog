@@ -2,7 +2,9 @@
 using Blog.Data.UnitOfWork;
 using Blog.Entity.DTOS.Articles;
 using Blog.Entity.Entities;
+using Blog.Entity.Enums;
 using Blog.Service.Extensitions;
+using Blog.Service.Helpers;
 using Blog.Service.Services.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -21,13 +23,15 @@ namespace Blog.Service.Services.Concrete
         private readonly IUnitOfWorked _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IImageHelper imageHelper;
         private readonly ClaimsPrincipal _user;
 
-        public ArticleServices(IUnitOfWorked unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+        public ArticleServices(IUnitOfWorked unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor, IImageHelper imageHelper)
         {
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
             this.httpContextAccessor = httpContextAccessor;
+            this.imageHelper = imageHelper;
             _user = httpContextAccessor.HttpContext.User;
         }
 
@@ -36,8 +40,12 @@ namespace Blog.Service.Services.Concrete
             //var userId = Guid.Parse("4A2EC830-70B3-4158-9392-995C592DFE36");
             var userId = _user.GetLeggedInUserId();
             var userEmail = _user.GetLeggedInEmail();
-            var imageId = Guid.Parse("C0CBE860-D7A6-4A6A-954A-9B99DCC1F3BD");
-            var article = new Article(articleaddDTO.Title, articleaddDTO.Content, userId,userEmail, articleaddDTO.CategoryId,imageId);
+            var imageUpload = await imageHelper.Upload(articleaddDTO.Title, articleaddDTO.Photo, ImageType.Post);
+            Image image = new(imageUpload.FullName, articleaddDTO.Photo.ContentType, userEmail);
+            await _unitOfWork.GetRepository<Image>().AddAsync(image);
+            //var imageId = Guid.Parse("C0CBE860-D7A6-4A6A-954A-9B99DCC1F3BD");
+
+            var article = new Article(articleaddDTO.Title, articleaddDTO.Content, userId,userEmail, articleaddDTO.CategoryId,image.Id);
             
             await _unitOfWork.GetRepository<Article>().AddAsync(article);
             await _unitOfWork.SaveAsync();

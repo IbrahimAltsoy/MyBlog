@@ -4,6 +4,7 @@ using Blog.Entity.Entities;
 using Blog.Service.Extensitions;
 using Blog.Service.Services.Abstractions;
 using Blog.Web.ToastrMessaje;
+
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
@@ -48,6 +49,7 @@ namespace Blog.Web.Areas.Admin.Controllers
             var result = await validator.ValidateAsync(map);
             if (result.IsValid)
             {
+                
                 await _articleServices.CreateArticleAsync(articleAddDTO);
                 toastNotification.AddSuccessToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleAddSuccesfull(articleAddDTO.Title), new ToastrOptions
                 {
