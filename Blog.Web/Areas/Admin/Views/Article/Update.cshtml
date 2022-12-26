@@ -29,10 +29,25 @@
                             <span asp-validation-for="Content" class="text-danger"></span>
 
                         </div>
+                        <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="Image.FillName" class="form-label d-block">Resim yükleyiniz<</label>
+                            <img src="~/images/@Model.Image.FillName" alt="@Model.Title" />
+                            @*<input asp-for="Image.FillName" type="file" accept="image/*" class="form-control mb-2" id="defaultFormControlInput" aria-describedby="defaultFormControlHelp">
+                            <span asp-validation-for="Image.FillName" class="text-danger"></span>*@
+
+                        </div>
+                            <div class="form-group col-md-6">
+                            
+                            <input asp-for="Photo" type="file" accept="image/*" class="form-control mb-2" id="defaultFormControlInput"  aria-describedby="defaultFormControlHelp">
+                            <span asp-validation-for="Photo" class="text-danger"></span>
+
+                        </div>
+                        </div>
 
 
                         <div class="form-group">
-                            <button class="btn btn-primary" type="submit">Kaydet</button>
+                            <button class="btn btn-primary mt-3" type="submit">Kaydet</button>
                         </div>
                     </div>
                 </form>

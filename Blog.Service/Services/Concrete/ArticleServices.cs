@@ -64,7 +64,7 @@ namespace Blog.Service.Services.Concrete
         }
         public async Task<ArticleDTO>GetArticleWithCategoryNonDeletedAsycn( Guid articleId)
         {
-            var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => !x.IsDeleted && x.Id==articleId, x => x.Category);
+            var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => !x.IsDeleted && x.Id==articleId, x => x.Category, i => i.Image);
 
             var map = _mapper.Map<ArticleDTO>(article);
 
@@ -72,11 +72,18 @@ namespace Blog.Service.Services.Concrete
         }
         public async Task UpdateArticleAsync(ArticleUpdateDTO articleUpdateDTO)
         {
-            var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => !x.IsDeleted && x.Id == articleUpdateDTO.Id, x => x.Category);
+            var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => !x.IsDeleted && x.Id == articleUpdateDTO.Id, x => x.Category, i => i.Image);
 
             var userEmail = _user.GetLeggedInEmail();
 
-
+            if (articleUpdateDTO.Photo!=null)
+            {
+                imageHelper.Delete(article.Image.FillName);
+                var imageUpload = await imageHelper.Upload(articleUpdateDTO.Title, articleUpdateDTO.Photo, ImageType.Post);
+                Image image = new(imageUpload.FullName, articleUpdateDTO.Photo.ContentType, userEmail);
+                await _unitOfWork.GetRepository<Image>().AddAsync(image);
+                article.ImageId = image.Id;
+            }
             article.Title = articleUpdateDTO.Title;
             article.Content= articleUpdateDTO.Content;
             article.CategoryId= articleUpdateDTO.CategoryId;

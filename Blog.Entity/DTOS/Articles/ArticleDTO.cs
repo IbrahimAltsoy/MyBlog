@@ -1,4 +1,5 @@
 ﻿using Blog.Entity.DTOS.Categories;
+using Blog.Entity.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace Blog.Entity.DTOS.Articles
         public string Title { get; set; }
         public string Content { get; set; }
         public CategoryDTO Category { get; set; }
+
+        public Image Image { get; set; }
         
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
