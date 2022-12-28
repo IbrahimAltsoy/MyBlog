@@ -104,37 +104,20 @@ namespace Blog.Web.Areas.Admin.Controllers
 
             return View();
         }
-        //[HttpPost]
-        //public async Task<IActionResult> Update(CategoryUpdateDTO categoryUpdateDTO)
-        //{
-        //    var map = mapper.Map<Category>(categoryUpdateDTO);
-        //    var result = await validator.ValidateAsync(map);
-        //    if (result.IsValid)
-        //    {
-        //        await categoryService.UpdateCategoryleAsync(categoryUpdateDTO);
-        //        toastNotification.AddSuccessToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleUpdateSuccesfull(categoryUpdateDTO.Name), new ToastrOptions
-        //        {
-        //            Title = "Başarılı"
-        //        });
-        //        return RedirectToAction("Index", "Category", new { Areas = "Admin" });
-        //    }
-        //    else
-        //    {
-        //        result.AddToModelState(this.ModelState);
-        //        toastNotification.AddErrorToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleUpdateUnSuccessful(categoryUpdateDTO.Name), new ToastrOptions
-        //        {
-        //            Title = "Başarısız"
-        //        });
-        //    }
-        //    //var categories = await categoryService.GetAllCategoriesNonDeleted();
-        //    //categoryService.categories = categories;
-        //    return View(categoryUpdateDTO);
+
+        public async Task<IActionResult> Delete(Guid categoryId)
+        {
+            var deleteCategory = await categoryService.SafeDeleteCategoryAsync(categoryId);
 
 
+            toastNotification.AddWarningToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleDeleteSuccessful(deleteCategory), new ToastrOptions
+            {
+                Title = "Başarılı"
+            });
 
+            return RedirectToAction("Index", "Category", new { Areas = "Admin" });
+        }
 
-
-        //}
 
 
     }
