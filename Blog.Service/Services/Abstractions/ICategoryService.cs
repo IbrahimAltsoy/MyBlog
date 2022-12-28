@@ -1,4 +1,5 @@
 ﻿using Blog.Entity.DTOS.Categories;
+using Blog.Entity.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,10 @@ namespace Blog.Service.Services.Abstractions
 {
     public interface ICategoryService
     {
-        public Task<List<CategoryDTO>> GetAllCategoriesNonDeleted();
-        public Task CreateCategoryAsync(CategoryAddDTO categoryAddDTO);
+         Task<List<CategoryDTO>> GetAllCategoriesNonDeleted();
+         Task CreateCategoryAsync(CategoryAddDTO categoryAddDTO);
+        Task<Category> GetCategoryById(Guid id);
+        Task<string> UpdateCategoryAsync(CategoryUpdateDTO categoryUpdateDTO);
         //sonradan eklendi
         //public Task UpdateCategoryleAsync(CategoryUpdateDTO categoryUpdateDTO);
     }

@@ -76,15 +76,34 @@ namespace Blog.Web.Areas.Admin.Controllers
 
         }
         // update işlemi 
-        //[HttpGet]
-        //public async Task<IActionResult> Update(Guid categoryId)
-        //{
-        //    var category = await categoryService.GetAllCategoriesNonDeleted();
-        //    //var categories = await categoryService.GetAllCategoriesNonDeleted();
-        //    var categoryUpdateDto = mapper.Map<CategoryUpdateDTO>(category);
+        [HttpGet]
+        public async Task<IActionResult> Update(Guid categoryId)
+        {
+            var category = await categoryService.GetCategoryById(categoryId);
 
-        //    return View(categoryUpdateDto);
-        //}
+            var map = mapper.Map<Category, CategoryUpdateDTO>(category);
+
+            return View(map);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(CategoryUpdateDTO categoryUpdateDTO)
+        {
+            var map = mapper.Map<Category>(categoryUpdateDTO);
+            var result = await validator.ValidateAsync(map);
+            if (result.IsValid)
+            {
+                var name = await categoryService.UpdateCategoryAsync(categoryUpdateDTO);
+                toastNotification.AddSuccessToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleUpdateSuccesfull(categoryUpdateDTO.Name), new ToastrOptions
+                {
+                    Title = "Başarılı"
+                });
+                return RedirectToAction("Index", "Category", new { Areas = "Admin" });
+
+            }
+            result.AddToModelState(this.ModelState);
+
+            return View();
+        }
         //[HttpPost]
         //public async Task<IActionResult> Update(CategoryUpdateDTO categoryUpdateDTO)
         //{
@@ -116,7 +135,7 @@ namespace Blog.Web.Areas.Admin.Controllers
 
 
         //}
-    
-        
+
+
     }
 }

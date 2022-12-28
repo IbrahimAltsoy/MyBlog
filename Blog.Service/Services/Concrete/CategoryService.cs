@@ -55,6 +55,29 @@ namespace Blog.Service.Services.Concrete
             return unitOfWorked.SaveAsync();
             
         }
+        // Update İşlemleri 
+        public Task<Category> GetCategoryById(Guid id)
+        {
+            var category = unitOfWorked.GetRepository<Category>().GetByGuidAsync(id);
+            return category;
+        }
+
+        public async Task<string> UpdateCategoryAsync(CategoryUpdateDTO categoryUpdateDTO)
+        {
+            var category = await unitOfWorked.GetRepository<Category>().GetAsync(x => !x.IsDeleted && x.Id == categoryUpdateDTO.Id);
+
+            var userEmail = _user.GetLeggedInEmail();
+            category.Name = categoryUpdateDTO.Name;
+            category.ModifiedBy = userEmail;
+            category.ModifiedDate = DateTime.Now;
+
+            await unitOfWorked.GetRepository<Category>().UpdateAsync(category);
+            await unitOfWorked.SaveAsync();
+
+           
+            return category.Name;
+
+        }
 
 
 

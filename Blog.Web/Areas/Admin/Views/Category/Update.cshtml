@@ -1,7 +1,6 @@
-﻿@model CategoryAddDTO
-
+﻿@model CategoryUpdateDTO
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Kategori Yönetimi /</span> Kategori Güncelle </h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Kategori Yönetimi /</span> Kategori güncelle </h4>
 
     <div class="row">
         <div class="col-md-12">
@@ -10,23 +9,20 @@
                 <form asp-controller="Category" asp-action="Update" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly"></div>
                     <div class="card-body">
-                       @* <input type="hidden" asp-for="Id" />*@
-                       @* <div class="form-group">
-                            <label asp-for="CategoryId">Kategori</label>
-                            <select id="categoryList" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.categories, "Id", "Name"))"> </select>
-                            <span asp-validation-for="CategoryId" class="text-danger"></span>
 
-                        </div>*@
+                        <input type="hidden" asp-for="Id" />
                         <div class="form-group">
-                            <label asp-for="Name" class="form-label">Başlık</label>
-                            <input asp-for="Name" type="text" class="form-control mb-2" id="defaultFormControlInput" placeholder="Lütfen Başlık giriniz" aria-describedby="defaultFormControlHelp">
+                            <label asp-for="Name" class="form-label">Kategori</label>
+                            <Input asp-for="Name" type="text" class="form-control mb-2" id="defaultFormControlInput" placeholder="Lütfen kategori giriniz" aria-describedby="defaultFormControlHelp" min-height="280px">
                             <span asp-validation-for="Name" class="text-danger"></span>
 
                         </div>
-                                              
+
+                        
+
 
                         <div class="form-group">
-                            <button class="btn btn-primary mt-3" type="submit">Güncelle</button>
+                            <button class="btn btn-primary" type="submit">Kaydet</button>
                         </div>
                     </div>
                 </form>
