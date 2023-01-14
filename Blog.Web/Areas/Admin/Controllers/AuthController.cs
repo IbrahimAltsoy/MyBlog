@@ -29,7 +29,7 @@ namespace Blog.Web.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var user = await userManager.FindByEmailAsync(userLoginDto.Email);
-               if (user != null)
+               if (user!=null)
                 {
                     var result = await signInManager.PasswordSignInAsync(user, userLoginDto.Password, userLoginDto.RememberMe, false);
                     if (result.Succeeded)
