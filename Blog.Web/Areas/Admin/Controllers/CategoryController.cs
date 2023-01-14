@@ -75,6 +75,31 @@ namespace Blog.Web.Areas.Admin.Controllers
             return View();
 
         }
+        [HttpPost]
+        public async Task<IActionResult> AddWithAjax([FromBody] CategoryAddDTO categoryAddDto)
+        {
+            var map = mapper.Map<Category>(categoryAddDto);
+            var result = await validator.ValidateAsync(map);
+
+            if (result.IsValid)
+            {
+                await categoryService.CreateCategoryAsync(categoryAddDto);
+                toastNotification.AddSuccessToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleAddSuccesfull(categoryAddDto.Name), new ToastrOptions
+                {
+                    Title = "Başarılı"
+                });
+
+                return Json("Başarılı");
+            }
+            else
+            {
+                toastNotification.AddErrorToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleAddUnSuccessful(categoryAddDto.Name), new ToastrOptions
+                {
+                    Title = "Başarısız"
+                });
+                return Json(result.Errors.First().ErrorMessage);
+            }
+        }
         // update işlemi 
         [HttpGet]
         public async Task<IActionResult> Update(Guid categoryId)

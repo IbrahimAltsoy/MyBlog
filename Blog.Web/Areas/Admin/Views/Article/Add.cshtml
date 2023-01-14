@@ -12,6 +12,10 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label asp-for="CategoryId">Kategori</label>
+                            <a class="btn text-primary float-end" data-bs-toggle="modal" data-bs-target="#exampleModal" >Ekle
+                                <i class="bx bx-plus">+</i>
+                            </a>
+                            
                             <select id="categoryList" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.categories, "Id", "Name"))"> </select>
                             <span asp-validation-for="CategoryId" class="text-danger"></span>
 
@@ -34,13 +38,7 @@
                             <span asp-validation-for="Photo" class="text-danger"></span>
 
                         </div>
-                       @* // *@
-                        @*<div class="form-group">
-                            <label asp-for="Image" class="control-label"></label>
-                            <input asp-for="Image" class="form-control" type="file" />
-                            <span asp-validation-for="Image" class="text-danger"></span>
-                        </div>*@
-                        @*//*@
+                       
                        
                         
                         <div class="form-group">
@@ -52,7 +50,46 @@
         </div>
 
 
-        <!-- Form controls -->
-
+        
     </div>
 </div>
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Yeni Kategori</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Kategori</label>
+                        <input type="text" class="form-control" id="categoryName">
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary" data-keyboard="false" id="btnSave">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+
+    <script src="~/js/categoryAdd.js"></script>
+    <script>
+        var app = app || {};
+        app.Urls = app.Urls || {};
+
+        app.Urls.baseUrl = '@Url.Content("~")';
+        app.Urls.categoryAddUrl = "@(Url.Action("AddWithAjax", "Category"))";
+        app.Urls.articleAddUrl = "@(Url.Action("Add", "Article"))";
+    </script>
+
+}
