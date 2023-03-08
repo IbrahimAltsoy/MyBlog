@@ -38,8 +38,8 @@ namespace Blog.Service.Services.Concrete
         public async Task CreateArticleAsync(ArticleAddDTO articleaddDTO)
         {
             //var userId = Guid.Parse("4A2EC830-70B3-4158-9392-995C592DFE36");
-            var userId = _user.GetLeggedInUserId();
-            var userEmail = _user.GetLeggedInEmail();
+            var userId = _user.GetLoggedInUserId();
+            var userEmail = _user.GetLoggedInEmail();
             var imageUpload = await imageHelper.Upload(articleaddDTO.Title, articleaddDTO.Photo, ImageType.Post);
             Image image = new(imageUpload.FullName, articleaddDTO.Photo.ContentType, userEmail);
             await _unitOfWork.GetRepository<Image>().AddAsync(image);
@@ -74,7 +74,7 @@ namespace Blog.Service.Services.Concrete
         {
             var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => !x.IsDeleted && x.Id == articleUpdateDTO.Id, x => x.Category, i => i.Image);
 
-            var userEmail = _user.GetLeggedInEmail();
+            var userEmail = _user.GetLoggedInEmail();
 
             if (articleUpdateDTO.Photo!=null)
             {
@@ -96,7 +96,7 @@ namespace Blog.Service.Services.Concrete
         }
         public async Task SafeArticleDeleteAsync(Guid articleId)
         {
-            var userEmail = _user.GetLeggedInEmail();
+            var userEmail = _user.GetLoggedInEmail();
 
 
             var article = await _unitOfWork.GetRepository<Article>().GetByGuidAsync(articleId);

@@ -1,11 +1,12 @@
-
-using Microsoft.EntityFrameworkCore;
 using Blog.Data.Context;
 using Blog.Data.Extensions;
 using Blog.Service.Extensitions;
 using Blog.Entity.Entities;
 using Microsoft.AspNetCore.Identity;
 using NToastNotify;
+using Blog.Service.Services.Abstractions;
+using Blog.Service.Services.Concrete;
+using Blog.Service.Describers;
 //using Microsoft.EntityFrameworkCore;
 //using Blog.Data.Context; bunlarý ekleyebilmek için Packeta ten eklemeler yaptýk 
 
@@ -36,6 +37,7 @@ builder.Services.AddControllersWithViews()
 
 // Burada bitiyor, DefaultConnection bu isim appsetting.jsondan geldi 
 
+
 builder.Services.AddIdentity<AppUser, AppRole>(opt =>
 {// Burada þifrtede olmasý gereken büyük yazý küçük yazý gibi zorunlululalrrý true ve false olarak gerekliliðini ifade ediyoruz. 
     opt.Password.RequireNonAlphanumeric = false;
@@ -43,7 +45,9 @@ builder.Services.AddIdentity<AppUser, AppRole>(opt =>
     opt.Password.RequireUppercase = false;
 
 })
-    .AddRoleManager<RoleManager<AppRole>>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+    .AddRoleManager<RoleManager<AppRole>>()
+    .AddErrorDescriber<CustomIdentityErrorDescriber>()
+    .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 builder.Services.ConfigureApplicationCookie(config =>
 {
     config.LoginPath = new PathString("/Admin/Auth/Login");

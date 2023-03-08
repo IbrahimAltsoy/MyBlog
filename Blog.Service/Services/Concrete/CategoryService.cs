@@ -1,20 +1,12 @@
 ﻿using AutoMapper;
 using Blog.Data.UnitOfWork;
-using Blog.Entity.DTOS.Articles;
 using Blog.Entity.DTOS.Categories;
 using Blog.Entity.Entities;
 using Blog.Service.Extensitions;
 using Blog.Service.Helpers;
 using Blog.Service.Services.Abstractions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 //using static System.Net.Mime.MediaTypeNames;
 
 namespace Blog.Service.Services.Concrete
@@ -37,8 +29,8 @@ namespace Blog.Service.Services.Concrete
         }
         public async Task<List<CategoryDTO>> GetAllCategoriesNonDeleted()
         {
-            var userId = _user.GetLeggedInUserId();
-            var userEmail = _user.GetLeggedInEmail();
+            var userId = _user.GetLoggedInUserId();
+            var userEmail = _user.GetLoggedInEmail();
             var categories = await unitOfWorked.GetRepository<Category>().GetAllAsync(x => !x.IsDeleted);
             var map = mapper.Map<List<CategoryDTO>>(categories);
 
@@ -48,7 +40,7 @@ namespace Blog.Service.Services.Concrete
         public Task CreateCategoryAsync(CategoryAddDTO categoryAddDTO)
         {
             
-            var userEmail = _user.GetLeggedInEmail();
+            var userEmail = _user.GetLoggedInEmail();
             Category category = new (categoryAddDTO.Name, userEmail);
            unitOfWorked.GetRepository<Category>().AddAsync(category);
             //unitOfWorked.SaveAsync();
@@ -66,7 +58,7 @@ namespace Blog.Service.Services.Concrete
         {
             var category = await unitOfWorked.GetRepository<Category>().GetAsync(x => !x.IsDeleted && x.Id == categoryUpdateDTO.Id);
 
-            var userEmail = _user.GetLeggedInEmail();
+            var userEmail = _user.GetLoggedInEmail();
             category.Name = categoryUpdateDTO.Name;
             category.ModifiedBy = userEmail;
             category.ModifiedDate = DateTime.Now;
@@ -81,7 +73,7 @@ namespace Blog.Service.Services.Concrete
         public async Task<string> SafeDeleteCategoryAsync(Guid categoryId)
         {
 
-            var userEmail = _user.GetLeggedInEmail();
+            var userEmail = _user.GetLoggedInEmail();
 
 
             var category = await unitOfWorked.GetRepository<Category>().GetByGuidAsync(categoryId);

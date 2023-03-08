@@ -1,17 +1,16 @@
 ﻿using AutoMapper;
-using Blog.Entity.DTOS.Articles;
 using Blog.Entity.DTOS.Categories;
 using Blog.Entity.Entities;
 using Blog.Service.Extensitions;
 using Blog.Service.Services.Abstractions;
-using Blog.Service.Services.Concrete;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
-using System.ComponentModel.DataAnnotations;
 
 namespace Blog.Web.Areas.Admin.Controllers
 {
+    [AllowAnonymous]
     [Area("Admin")]
     public class CategoryController : Controller
     {
@@ -32,6 +31,7 @@ namespace Blog.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var categories = await categoryService.GetAllCategoriesNonDeleted();
+            var x = 5;
             return View(categories);
         }
         [HttpGet]
