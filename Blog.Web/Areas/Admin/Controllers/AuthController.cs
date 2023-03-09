@@ -24,12 +24,12 @@ namespace Blog.Web.Areas.Admin.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
-        public async Task< IActionResult> Login(UserLoginDto userLoginDto)
+        public async Task<IActionResult> Login(UserLoginDto userLoginDto)
         {
             if (ModelState.IsValid)
             {
                 var user = await userManager.FindByEmailAsync(userLoginDto.Email);
-               if (user!=null)
+                if (user != null)
                 {
                     var result = await signInManager.PasswordSignInAsync(user, userLoginDto.Password, userLoginDto.RememberMe, false);
                     if (result.Succeeded)
@@ -55,7 +55,7 @@ namespace Blog.Web.Areas.Admin.Controllers
                 return View();
 
             }
-            
+
         }
         [Authorize]
         [HttpGet]
@@ -64,6 +64,13 @@ namespace Blog.Web.Areas.Admin.Controllers
             await signInManager.SignOutAsync();
 
             return RedirectToAction("Index", "Home", new { Area = "" });
+        }
+
+        
+        [HttpGet]
+        public async Task<IActionResult> AccessDanied()
+        {
+            return View();
         }
     }
 }
