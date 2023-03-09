@@ -30,21 +30,21 @@ namespace Blog.Web.Areas.Admin.Controllers
         }
         //
         [HttpGet]
-        [Authorize(Roles = "admin, Ersin,erkan")] // bu role sahip kişiler buradaki acrion görebilir uygulayabilir.  3. role sahip kişiler bunlaarı yapabilir
+        [Authorize(Roles =$"{RoleConst.RoleConst.Admin}, {RoleConst.RoleConst.User}, {RoleConst.RoleConst.Superadmin}" )] // bu role sahip kişiler buradaki acrion görebilir uygulayabilir.  3. role sahip kişiler bunlaarı yapabilir
         public async Task<IActionResult> Index()
         {
             var articles = await _articleServices.GetAllArticlesWithCategoryNonDeletedAsycn();
             return View(articles);
         }
         [HttpGet]
-        [Authorize(Roles = "Admin, Ersin")]
+        [Authorize(Roles = $"{RoleConst.RoleConst.Admin}, {RoleConst.RoleConst.User}")]
         public async Task<IActionResult> UnDeleted()
         {
             var articles = await _articleServices.GetAllArticlesWithCategoryUnDeletedAsycn();
             return View(articles);
         }
         [HttpGet]
-        [Authorize(Roles = "Admin, Ersin")]//sadece ersin ve admin olan kişiler bunları yapabilir başka kimse yapamaz
+        [Authorize(Roles = $"{RoleConst.RoleConst.Admin}, {RoleConst.RoleConst.User}")]//sadece ersin ve admin olan kişiler bunları yapabilir başka kimse yapamaz
         public async Task<IActionResult> Add()
         {
 
@@ -52,7 +52,7 @@ namespace Blog.Web.Areas.Admin.Controllers
             return View(new ArticleAddDTO { categories = categories });
         }
         [HttpPost]
-        [Authorize(Roles = "Admin, Ersin")]
+        [Authorize(Roles = $"{RoleConst.RoleConst.Admin}, {RoleConst.RoleConst.User}")]
         public async Task<IActionResult> Add(ArticleAddDTO articleAddDTO)
         {
             //  var result = await validator.ValidateAsync(articleAddDTO); Normalde böyle kullanacaktık fakat biz burada Dto gönderemeyiz çünkü biz fluentvalidationu Article entity göre kurduk. o yüzden burada mapping işlemi yapıp öyle işleme alacağız bunu da aşağıdaki kodlarlar sağlamış olacaz. 
@@ -87,7 +87,7 @@ namespace Blog.Web.Areas.Admin.Controllers
 
         }
         [HttpGet]
-        [Authorize(Roles = "Admin, Ersin")]
+        [Authorize(Roles = $"{RoleConst.RoleConst.Admin}, {RoleConst.RoleConst.User}")]
         public async Task<IActionResult> Update(Guid articleId)
         {
             var article = await _articleServices.GetArticleWithCategoryNonDeletedAsycn(articleId);
@@ -97,7 +97,7 @@ namespace Blog.Web.Areas.Admin.Controllers
             return View(articleUpdateDto);
         }
         [HttpPost]
-        [Authorize(Roles = "Admin, Ersin")]
+        [Authorize(Roles = $"{RoleConst.RoleConst.Admin}, {RoleConst.RoleConst.User}")]
         public async Task<IActionResult> Update(ArticleUpdateDTO articleUpdateDTO)
         {
             var map = mapper.Map<Article>(articleUpdateDTO);
@@ -128,7 +128,7 @@ namespace Blog.Web.Areas.Admin.Controllers
 
 
         }
-        [Authorize(Roles = "Admin, Ersin")]
+        [Authorize(Roles = $"{RoleConst.RoleConst.Admin}, {RoleConst.RoleConst.User}")]
         public async Task<IActionResult> Delete(Guid articleId)
         {
             var deleteArticle = await _articleServices.GetArticleWithCategoryNonDeletedAsycn(articleId);
@@ -140,7 +140,7 @@ namespace Blog.Web.Areas.Admin.Controllers
 
             return RedirectToAction("Index", "Article", new { Areas = "Admin" });
         }
-        [Authorize(Roles = "Admin, Ersin")]
+        [Authorize(Roles = $"{RoleConst.RoleConst.Admin}, {RoleConst.RoleConst.User}")]
         public async Task<IActionResult> UndoDelete(Guid articleId)
         {
           

@@ -154,5 +154,35 @@ namespace Blog.Web.Areas.Admin.Controllers
             }
             return NotFound();
         }
+        [HttpGet]
+        public async Task<IActionResult> Profile(Guid userId)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var map = mapper.Map<UserProfileDTO>(user);
+            return View(map);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Profile(UserProfileDTO userProfileDto)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.UserProfileUpdateAsync(userProfileDto);
+                if (result)
+                {
+                    _toastNotification.AddSuccessToastMessage("Profil güncelleme işlemi tamamlandı", new ToastrOptions { Title = "İşlem Başarılı" });
+                    return RedirectToAction("Index", "Home", new { Area = "Admin" });
+                }
+                else
+                {
+                    var profile = await _userService.GetUserProfileAsync();
+                    _toastNotification.AddErrorToastMessage("Profil güncelleme işlemi tamamlanamadı", new ToastrOptions { Title = "İşlem Başarısız" });
+                    return View(profile);
+                }
+            }
+            else
+                return NotFound();
+        }
+        
     }
 }
