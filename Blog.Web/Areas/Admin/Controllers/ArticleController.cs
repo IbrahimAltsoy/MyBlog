@@ -28,6 +28,7 @@ namespace Blog.Web.Areas.Admin.Controllers
             this.validator = validator;
             this.toastNotification = toastNotification;
         }
+        //
         [HttpGet]
         [Authorize(Roles = "admin, Ersin,erkan")] // bu role sahip kişiler buradaki acrion görebilir uygulayabilir.  3. role sahip kişiler bunlaarı yapabilir
         public async Task<IActionResult> Index()
