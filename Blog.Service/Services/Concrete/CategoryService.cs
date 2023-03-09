@@ -31,6 +31,16 @@ namespace Blog.Service.Services.Concrete
         {
             var userId = _user.GetLoggedInUserId();
             var userEmail = _user.GetLoggedInEmail();
+            var categories = await unitOfWorked.GetRepository<Category>().GetAllAsync(x => x.IsDeleted);
+            var map = mapper.Map<List<CategoryDTO>>(categories);
+
+            return map;
+
+        }
+        public async Task<List<CategoryDTO>> GetAllCategoriesDeleted()
+        {
+            var userId = _user.GetLoggedInUserId();
+            var userEmail = _user.GetLoggedInEmail();
             var categories = await unitOfWorked.GetRepository<Category>().GetAllAsync(x => !x.IsDeleted);
             var map = mapper.Map<List<CategoryDTO>>(categories);
 
@@ -84,7 +94,26 @@ namespace Blog.Service.Services.Concrete
             await unitOfWorked.SaveAsync();
             return category.Name;
         }
+        public async Task<string> UndoDeleteCategoryAsync(Guid categoryId)
+        {
+            var category = await unitOfWorked.GetRepository<Category>().GetByGuidAsync(categoryId);
+            category.IsDeleted = false;
+            category.DeletedDate = null;
+            category.DeletedBy = null;
+            await unitOfWorked.GetRepository<Category>().UpdateAsync(category);
+            await unitOfWorked.SaveAsync();
+            return category.Name;
+        }
+        //public async Task UndoArticleUnDeleteAsync(Guid articleId)
+        //{
 
+        //    var article = await _unitOfWork.GetRepository<Article>().GetByGuidAsync(articleId);
+        //    article.IsDeleted = false;
+        //    article.DeletedDate = null;
+        //    article.DeletedBy = null;
+        //    await _unitOfWork.GetRepository<Article>().UpdateAsync(article);
+        //    await _unitOfWork.SaveAsync();
+        //}
 
     }
 }

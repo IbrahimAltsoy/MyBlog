@@ -15,6 +15,8 @@ namespace Blog.Service.Services.Abstractions
         Task<Category> GetCategoryById(Guid id);
         Task<string> UpdateCategoryAsync(CategoryUpdateDTO categoryUpdateDTO);
         Task<string> SafeDeleteCategoryAsync(Guid categoryId);
+        Task<List<CategoryDTO>> GetAllCategoriesDeleted();
+        Task<string> UndoDeleteCategoryAsync(Guid categoryId);
 
         //sonradan eklendi
         //public Task UpdateCategoryleAsync(CategoryUpdateDTO categoryUpdateDTO);

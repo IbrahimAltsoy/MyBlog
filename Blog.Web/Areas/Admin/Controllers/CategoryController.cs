@@ -3,6 +3,7 @@ using Blog.Entity.DTOS.Categories;
 using Blog.Entity.Entities;
 using Blog.Service.Extensitions;
 using Blog.Service.Services.Abstractions;
+using Blog.Service.Services.Concrete;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,8 +31,15 @@ namespace Blog.Web.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            var categories = await categoryService.GetAllCategoriesDeleted();
+         
+            return View(categories);
+        }
+        [HttpGet]
+        public async Task<IActionResult> UnDeleted()
+        {
             var categories = await categoryService.GetAllCategoriesNonDeleted();
-            var x = 5;
+           
             return View(categories);
         }
         [HttpGet]
@@ -136,6 +144,16 @@ namespace Blog.Web.Areas.Admin.Controllers
 
 
             toastNotification.AddWarningToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleDeleteSuccessful(deleteCategory), new ToastrOptions
+            {
+                Title = "Başarılı"
+            });
+
+            return RedirectToAction("Index", "Category", new { Areas = "Admin" });
+        }
+        public async Task<IActionResult> UndoDelete(Guid categoryId)
+        {
+            await categoryService.UndoDeleteCategoryAsync(categoryId);
+            toastNotification.AddWarningToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleDeleteSuccessful("Arşive başarılı bir şekilde alındı"), new ToastrOptions
             {
                 Title = "Başarılı"
             });

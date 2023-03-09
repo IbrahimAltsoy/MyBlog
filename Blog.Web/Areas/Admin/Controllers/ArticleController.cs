@@ -29,17 +29,24 @@ namespace Blog.Web.Areas.Admin.Controllers
             this.validator = validator;
             this.toastNotification = toastNotification;
         }
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var articles = await _articleServices.GetAllArticlesWithCategoryNonDeletedAsycn();
             return View(articles);
         }
         [HttpGet]
+        public async Task<IActionResult> UnDeleted()
+        {
+            var articles = await _articleServices.GetAllArticlesWithCategoryUnDeletedAsycn();
+            return View(articles);
+        }
+        [HttpGet]
         public async Task<IActionResult> Add()
         {
-            
+
             var categories = await _categoryService.GetAllCategoriesNonDeleted();
-            return View(new ArticleAddDTO { categories =categories});
+            return View(new ArticleAddDTO { categories = categories });
         }
         [HttpPost]
         public async Task<IActionResult> Add(ArticleAddDTO articleAddDTO)
@@ -49,7 +56,7 @@ namespace Blog.Web.Areas.Admin.Controllers
             var result = await validator.ValidateAsync(map);
             if (result.IsValid)
             {
-                
+
                 await _articleServices.CreateArticleAsync(articleAddDTO);
                 toastNotification.AddSuccessToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleAddSuccesfull(articleAddDTO.Title), new ToastrOptions
                 {
@@ -65,9 +72,9 @@ namespace Blog.Web.Areas.Admin.Controllers
                 toastNotification.AddErrorToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleAddUnSuccessful(articleAddDTO.Title), new ToastrOptions
                 {
                     Title = "Başarısız"
-                }); 
+                });
                 result.AddToModelState(this.ModelState);
-                
+
 
             }
             // Validation işlemi burada bitirmiş oluyoruz artık işleme girmiş oluyor. 
@@ -81,7 +88,7 @@ namespace Blog.Web.Areas.Admin.Controllers
             var article = await _articleServices.GetArticleWithCategoryNonDeletedAsycn(articleId);
             var categories = await _categoryService.GetAllCategoriesNonDeleted();
             var articleUpdateDto = mapper.Map<ArticleUpdateDTO>(article);
-            articleUpdateDto.categories= categories;
+            articleUpdateDto.categories = categories;
             return View(articleUpdateDto);
         }
         [HttpPost]
@@ -118,7 +125,6 @@ namespace Blog.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(Guid articleId)
         {
             var deleteArticle = await _articleServices.GetArticleWithCategoryNonDeletedAsycn(articleId);
-
             await _articleServices.SafeArticleDeleteAsync(articleId);
             toastNotification.AddWarningToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleDeleteSuccessful(deleteArticle.Title), new ToastrOptions
             {
@@ -127,5 +133,17 @@ namespace Blog.Web.Areas.Admin.Controllers
 
             return RedirectToAction("Index", "Article", new { Areas = "Admin" });
         }
+        public async Task<IActionResult> UndoDelete(Guid articleId)
+        {
+          
+            await _articleServices.UndoArticleUnDeleteAsync(articleId);
+            toastNotification.AddWarningToastMessage(ToastrMessaje.ToastrMessage.Article.ArticleDeleteSuccessful("Arşivden alındı"), new ToastrOptions
+            {
+                Title = "Başarılı"
+            });
+
+            return RedirectToAction("Index", "Article", new { Areas = "Admin" });
+        }
+
     }
 }
