@@ -137,7 +137,7 @@ namespace Blog.Web.Areas.Admin.Controllers
 
             return View();
         }
-
+        // 
         public async Task<IActionResult> Delete(Guid categoryId)
         {
             var deleteCategory = await categoryService.SafeDeleteCategoryAsync(categoryId);
