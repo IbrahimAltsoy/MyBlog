@@ -3,6 +3,7 @@ using Blog.Entity.DTOS.Users;
 using Blog.Entity.Entities;
 using Blog.Service.Extensitions;
 using Blog.Service.Services.Abstractions;
+using Blog.Service.Services.Concrete;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -32,15 +33,18 @@ namespace Blog.Web.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var users = await _userManager.Users.ToListAsync();
-            var map = mapper.Map<List<UserDTO>>(users);
-            foreach(var item in map)
-            {
-                var findUser = await _userManager.FindByIdAsync(item.Id.ToString());
-                var role = string.Join ("",await _userManager.GetRolesAsync(findUser));
-                item.Role = role;
-            }
-            return View(map);
+            var model = await _userService.GetAllUsersWithRoleAsync();
+
+            return View(model);
+            //var users = await _userManager.Users.ToListAsync();
+            //var map = mapper.Map<List<UserDTO>>(users);
+            //foreach(var item in map)
+            //{
+            //    var findUser = await _userManager.FindByIdAsync(item.Id.ToString());
+            //    var role = string.Join ("",await _userManager.GetRolesAsync(findUser));
+            //    item.Role = role;
+            //}
+            //return View(map);
         }
         [HttpGet]
         public async Task<IActionResult> Add()
@@ -157,9 +161,9 @@ namespace Blog.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile(Guid userId)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var map = mapper.Map<UserProfileDTO>(user);
-            return View(map);
+            var profile = await _userService.GetUserProfileAsync();
+
+            return View(profile);
         }
         [HttpPost]
         public async Task<IActionResult> Profile(UserProfileDTO userProfileDto)

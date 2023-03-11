@@ -21,6 +21,7 @@ namespace Blog.Service.Extensitions
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddTransient<IUserService, UserService>();// servis için eklendi
             services.AddScoped<IImageHelper, ImageHelper>();
+            services.AddTransient<IDashboardService, DashboardService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAutoMapper(assembly);

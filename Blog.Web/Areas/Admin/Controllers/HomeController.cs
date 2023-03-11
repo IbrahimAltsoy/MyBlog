@@ -1,6 +1,8 @@
 ﻿using Blog.Service.Services.Abstractions;
+using Blog.Service.Services.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Blog.Web.Areas.Admin.Controllers
 {
@@ -8,21 +10,39 @@ namespace Blog.Web.Areas.Admin.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly IArticleServices _articleServices;
+        private readonly IArticleServices articleService;
+        private readonly IDashboardService dashbordService;
 
-        public HomeController(IArticleServices articleServices)
+        public HomeController(IArticleServices articleService, IDashboardService dashbordService)
         {
-            this._articleServices = articleServices;
+            this.articleService = articleService;
+            this.dashbordService = dashbordService;
         }
-
-
-
-
         public async Task<IActionResult> Index()
         {
-            var article = await _articleServices.GetAllArticlesWithCategoryNonDeletedAsycn();
+            var articles = await articleService.GetAllArticlesWithCategoryNonDeletedAsync();
 
-            return View(article);
+            return View(articles);
         }
+        //[HttpGet]
+        //public async Task<IActionResult> YearlyArticleCounts()
+        //{
+        //    var count = await dashbordService.GetYearlyArticleCounts();
+        //    return Json(JsonConvert.SerializeObject(count));
+        //}
+        //[HttpGet]
+        //public async Task<IActionResult> TotalArticleCount()
+        //{
+        //    var count = await dashbordService.GetTotalArticleCount();
+        //    return Json(count);
+        //}
+        //[HttpGet]
+        //public async Task<IActionResult> TotalCategoryCount()
+        //{
+        //    var count = await dashbordService.GetTotalCategoryCount();
+        //    return Json(count);
+        //}
+       
+
     }
 }

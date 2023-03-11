@@ -7,13 +7,7 @@ using Blog.Service.Extensitions;
 using Blog.Service.Helpers;
 using Blog.Service.Services.Abstractions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Blog.Service.Services.Concrete
@@ -34,7 +28,14 @@ namespace Blog.Service.Services.Concrete
             this.imageHelper = imageHelper;
             _user = httpContextAccessor.HttpContext.User;
         }
+        public async Task<List<ArticleDTO>> GetAllArticlesWithCategoryNonDeletedAsync()
+        {
 
+            var articles = await _unitOfWork.GetRepository<Article>().GetAllAsync(x => !x.IsDeleted, x => x.Category);
+            var map = _mapper.Map<List<ArticleDTO>>(articles);
+
+            return map;
+        }
         public async Task CreateArticleAsync(ArticleAddDTO articleaddDTO)
         {
             //var userId = Guid.Parse("4A2EC830-70B3-4158-9392-995C592DFE36");

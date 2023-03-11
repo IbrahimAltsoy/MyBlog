@@ -26,9 +26,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\articleIndex.js" />
+    <None Include="wwwroot\js\categoryAdd.js" />
+    <None Include="wwwroot\js\categoryIndex.js" />
+    <None Include="wwwroot\js\dashboardIndex.js" />
+    <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\js\userIndex.js" />
+    <None Include="wwwroot\js\usersIndex.js" />
     <None Include="wwwroot\sneat\.github\workflows\handle-new-issue-comment.yml" />
     <None Include="wwwroot\sneat\.github\workflows\handle-new-issue.yml" />
     <None Include="wwwroot\sneat\.github\workflows\issue-staler.yml" />
+    <None Include="wwwroot\sneat\assets\js\config.js" />
+    <None Include="wwwroot\sneat\assets\js\dashboards-analytics.js" />
+    <None Include="wwwroot\sneat\assets\js\extended-ui-perfect-scrollbar.js" />
+    <None Include="wwwroot\sneat\assets\js\form-basic-inputs.js" />
+    <None Include="wwwroot\sneat\assets\js\main.js" />
+    <None Include="wwwroot\sneat\assets\js\pages-account-settings-account.js" />
+    <None Include="wwwroot\sneat\assets\js\ui-modals.js" />
+    <None Include="wwwroot\sneat\assets\js\ui-popover.js" />
+    <None Include="wwwroot\sneat\assets\js\ui-toasts.js" />
   </ItemGroup>
 
 </Project>

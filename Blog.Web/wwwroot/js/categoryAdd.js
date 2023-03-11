@@ -19,7 +19,7 @@ $(document).ready(function () {
             url: addUrl,
             type: "POST",
             contentType: "application/json; charset=utf-8",
-            dataType: "json",
+            dataType : "json",
             data: jsonData,
             success: function (data) {
                 setTimeout(function () {
