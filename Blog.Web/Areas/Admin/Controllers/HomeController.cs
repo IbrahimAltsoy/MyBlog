@@ -12,6 +12,7 @@ namespace Blog.Web.Areas.Admin.Controllers
     {
         private readonly IArticleServices articleService;
         private readonly IDashboardService dashbordService;
+       
 
         public HomeController(IArticleServices articleService, IDashboardService dashbordService)
         {
@@ -21,14 +22,20 @@ namespace Blog.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var articles = await articleService.GetAllArticlesWithCategoryNonDeletedAsync();
+            var count = await dashbordService.GetYearlyArticleCounts();
+            /* dashboardService.GetYearlyArticleCounts();*/
+            ViewData["count"] = count;
 
             return View(articles);
         }
         //[HttpGet]
         //public async Task<IActionResult> YearlyArticleCounts()
         //{
-        //    var count = await dashbordService.GetYearlyArticleCounts();
-        //    return Json(JsonConvert.SerializeObject(count));
+        //var count = await dashbordService.GetYearlyArticleCounts();
+        //ViewData["count"] = count;
+        //    //Json(JsonConvert.SerializeObject(count));
+           
+        //    return View();
         //}
         //[HttpGet]
         //public async Task<IActionResult> TotalArticleCount()
@@ -42,7 +49,7 @@ namespace Blog.Web.Areas.Admin.Controllers
         //    var count = await dashbordService.GetTotalCategoryCount();
         //    return Json(count);
         //}
-       
+
 
     }
 }
