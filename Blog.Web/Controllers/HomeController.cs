@@ -1,4 +1,5 @@
 ﻿using Blog.Service.Services.Abstractions;
+using Blog.Service.Services.Concrete;
 using Blog.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -16,10 +17,9 @@ namespace Blog.Web.Controllers
             this._articleServices = articleServices;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Guid? categoryId, int currentPage = 1, int pageSize = 3, bool isAscending = false)
         {
-            var articles = await _articleServices.GetAllArticlesWithCategoryNonDeletedAsycn();
-
+            var articles = await _articleServices.GetAllByPagingAsync(categoryId, currentPage, pageSize, isAscending);
             return View(articles);
         }
 

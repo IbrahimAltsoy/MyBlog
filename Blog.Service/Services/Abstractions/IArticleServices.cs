@@ -18,6 +18,7 @@ namespace Blog.Service.Services.Abstractions
         Task UpdateArticleAsync(ArticleUpdateDTO articleUpdateDTO);
         Task SafeArticleDeleteAsync(Guid articleId);
         Task UndoArticleUnDeleteAsync(Guid articleId);
+        Task<ArticleListDto> GetAllByPagingAsync(Guid? categoryId, int currentPage = 1, int pageSize = 3, bool isAscending = false);
 
     }
 }
