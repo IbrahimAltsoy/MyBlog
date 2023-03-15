@@ -33,5 +33,10 @@ namespace Blog.Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var model = await _articleServices.GetArticleWithCategoryNonDeletedAsycn(id);
+            return View(model);
+        }
     }
 }
