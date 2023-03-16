@@ -119,7 +119,7 @@ namespace Blog.Service.Services.Concrete
         {
             //var userId = _user.GetLoggedInUserId();
             //var userEmail = _user.GetLoggedInEmail();
-            var categories = await unitOfWorked.GetRepository<Category>().GetAllAsync(x => !x.IsDeleted);
+            var categories = await unitOfWorked.GetRepository<Category>().GetAllAsync(x => x.IsDeleted);
             var map = mapper.Map<List<CategoryDTO>>(categories);
             if (map.Count>12)
             {

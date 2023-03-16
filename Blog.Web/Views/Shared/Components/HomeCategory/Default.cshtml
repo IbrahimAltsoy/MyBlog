@@ -3,8 +3,8 @@
     <ul>
         @foreach (var category in Model)
         {
-            <li><a href="/Home/Search?Keyword=@category.Name.ToLower()/">@category.Name</a> </li>
-
+           @* <li><a href="/Home/Search?Keyword=@category.Name.ToLower()/">@category.Name</a> </li>*@
+            <li><a asp-controller="Home" asp-action="Index" asp-route-categoryId="@category.Id">@category.Name</a> </li>
         }
     </ul>
    
