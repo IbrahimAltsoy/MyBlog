@@ -4,22 +4,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Detay Sayfasına Hoşgeldiniz</h1>
+
 <section class="blog-posts">
+  
     <div class="container">
         <div class="row">
+            <span style="margin-left:50px;">Detay Sayfasına Hoşgeldiniz</span>
             <div class="col-lg-8">
                 <div class="all-blog-posts">
                     <div class="row">
                         <div class="col-lg-12">
-
+                            @*<img src="@Model.Image" alt="">*@
+                            <img src="~/stand-blog/assets/images/blog-post-01.jpg" alt="">
 
                             <div class="blog-post">
                                 <div class="blog-thumb">
+                                   
                                     <img src="@Model.Image" alt="">
                                 </div>
                                 <div class="down-content">
-                                    <h4>@Model.Title</h4>
+                                    <span>@Model.Title</span>
                                     <ul class="post-info">
                             @*            <li>@Model.User.FirstNAme @Model.User.LastName</li>*@
                                         <li>@Model.CreatedDate.ToString("dd/MM/yyyy")</li>
@@ -28,6 +32,7 @@
                                     <p>
                                         @Model.Content
                                     </p>
+                                    <span>@Model.Category.Name</span>
                                 </div>
                             </div>
                         </div>

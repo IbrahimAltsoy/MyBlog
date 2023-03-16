@@ -17,6 +17,7 @@ namespace Blog.Service.Services.Abstractions
         Task<string> SafeDeleteCategoryAsync(Guid categoryId);
         Task<List<CategoryDTO>> GetAllCategoriesDeleted();
         Task<string> UndoDeleteCategoryAsync(Guid categoryId);
+        Task<List<CategoryDTO>> GetAllNonDeletedCategoriesTake12();
 
         //sonradan eklendi
         //public Task UpdateCategoryleAsync(CategoryUpdateDTO categoryUpdateDTO);

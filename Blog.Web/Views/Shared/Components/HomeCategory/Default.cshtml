@@ -1,0 +1,11 @@
+﻿@model List<CategoryDTO>
+<div class="content">
+    <ul>
+        @foreach (var category in Model)
+        {
+            <li><a href="/Home/Search?Keyword=@category.Name.ToLower()/">@category.Name</a> </li>
+
+        }
+    </ul>
+   
+</div>

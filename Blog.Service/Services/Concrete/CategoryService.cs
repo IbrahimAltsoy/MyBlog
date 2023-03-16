@@ -114,6 +114,24 @@ namespace Blog.Service.Services.Concrete
         //    await _unitOfWork.GetRepository<Article>().UpdateAsync(article);
         //    await _unitOfWork.SaveAsync();
         //}
+      
+        public async Task<List<CategoryDTO>> GetAllNonDeletedCategoriesTake12()
+        {
+            //var userId = _user.GetLoggedInUserId();
+            //var userEmail = _user.GetLoggedInEmail();
+            var categories = await unitOfWorked.GetRepository<Category>().GetAllAsync(x => !x.IsDeleted);
+            var map = mapper.Map<List<CategoryDTO>>(categories);
+            if (map.Count>12)
+            {
+                return map.Take(12).ToList();
+            }
+            else
+            {
+                return map.ToList();
+            }
+            
+
+        }
 
     }
 }

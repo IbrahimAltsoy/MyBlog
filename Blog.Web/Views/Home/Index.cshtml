@@ -83,7 +83,7 @@
                         <div class="col-lg-12">
                             <div class="sidebar-item search">
                                 <form id="search_form" name="gs" method="GET" action="#">
-                                    <input type="text" name="q" class="searchText" placeholder="type to search..." autocomplete="on">
+                                    <input type="text" name="q" class="searchText" placeholder="Arama" autocomplete="on">
                                 </form>
                             </div>
                         </div>
@@ -116,23 +116,16 @@
                                 </div>
                             </div>
                         </div>
+                     @*   Kategory*@
                         <div class="col-lg-12">
                             <div class="sidebar-item categories">
                                 <div class="sidebar-heading">
-                                    <h2>Categories</h2>
+                                    <h2>KATEGORİLER</h2>
                                 </div>
-                                <div class="content">
-                                    <ul>
-                                        <li><a href="#">- Nature Lifestyle</a></li>
-                                        <li><a href="#">- Awesome Layouts</a></li>
-                                        <li><a href="#">- Creative Ideas</a></li>
-                                        <li><a href="#">- Responsive Templates</a></li>
-                                        <li><a href="#">- HTML5 / CSS3 Templates</a></li>
-                                        <li><a href="#">- Creative &amp; Unique</a></li>
-                                    </ul>
-                                </div>
+                                @await Component.InvokeAsync("HomeCategory")
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
